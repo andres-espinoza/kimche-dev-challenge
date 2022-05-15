@@ -1,44 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import {Button} from '../index';
+import {useLazyQuery } from "@apollo/client";
+import FIND_COUNTRY from '../../GraphQl/query';
 
-const SearchBar = () => {
+const SearchBar = ({data}) => {
 
-    const [groupBy, setGroupBy] = useState('continent')
     const [keyword, setKeyword] = useState('')
-
-    useEffect(() => {
-
-        const URL = 'https://countries.trevorblades.com/';
-
-        fetch(URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({query: `
-            query {
-                    continents {
-                    name
-                    countries {
-                        name
-                    }
-                    }
-                }`
-            })
-        })
-        .then(res => res.json())
-        .then(data => console.log(data.data))
-
-    },[])
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const [displayCountries, setDisplayCountries] = useState(null)
+    
+    const [getCountry, countryData] = useLazyQuery(FIND_COUNTRY)
+    let typingInput = "^" + keyword;
+    let dynamicRegex = new RegExp(typingInput, "i")
+    
+    const groupByContinent = () => {
+        let countryCodes = []
+        for(let country of data?.countries) {
+            if(dynamicRegex.test(country.name)) {
+                countryCodes.push(country.code)
+            }
+        }
+        getCountry({variables: {arrayCodes: countryCodes}})
     }
 
     const handleChange = e => {
         setKeyword(e.target.value)
     }
+
+    useEffect(() => {
+        if(countryData.data) {
+            setDisplayCountries({
+                ...countryData.data
+            })
+        }
+    },[countryData])
+    
+
+    if(displayCountries) console.log(displayCountries);
+    
+
+
 
     return (
         <main>
@@ -49,12 +48,12 @@ const SearchBar = () => {
                 Some random text
             </p>
 
-            <form onSubmit={handleSubmit}>
-                <input type="text" onChange={handleChange} value={keyword} placeholder="Search for your Country"/>
-                <label> Group By: </label>
-                <input type="submit" value="Continent"/>
-                <input type="submit" value="Language"/>
-            </form>
+
+            <input type="text" onChange={handleChange} value={keyword} placeholder="Search for your Country"/>
+            <h3> Group By: </h3>
+            <button onClick={groupByContinent}>Continent</button>
+            <button>Language</button> 
+
 
         </main>
     )

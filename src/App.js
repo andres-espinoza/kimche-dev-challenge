@@ -1,18 +1,37 @@
 import React from "react";
 import "./App.css";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "@apollo/react-hooks";
 import { SearchBar } from "./components";
+import { useQuery, gql } from "@apollo/client";
 
-const client = new ApolloClient({
-  uri: "https://48p1r2roz4.sse.codesandbox.io",
-});
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <div>
-      <SearchBar />
-    </div>
-  </ApolloProvider>
-);
+
+
+const App = () => {
+
+  const countries = gql`
+    query {
+      countries {
+        name
+        code
+      }
+    }
+  `
+  const {data, loading} = useQuery(countries)
+
+
+    return (
+      <div>
+
+        {loading 
+          ? <p>cargando</p> 
+          : <SearchBar data={data}/>
+        }
+      </div>
+    )
+
+  
+
+}
+
+
 export default App;
