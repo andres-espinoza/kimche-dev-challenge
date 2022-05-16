@@ -13,15 +13,14 @@ const SearchBar = ({data}) => {
     }
 
     //Constants to use in the groupBy State
-    const byContinent = 'continent'
-    const byLanguage = 'language'
+    const byContinent = 'continents'
+    const byLanguage = 'languages'
 
     //Local state to store the data of the countries to display on screen later
     const [displayCountries, setDisplayCountries] = useState({
         display: [],
         groupBy: null,
-        continents: null,
-        languages: null,
+        titles: null,
     })
 
     //Hooks to get and store the data by query, using the country code
@@ -72,31 +71,40 @@ const SearchBar = ({data}) => {
 
 
     useEffect(() => {
-        if(countryData.data && displayCountries.groupBy === byContinent) {
+        if(countryData.data) {
             let data = []
-            let allContinents = []
-            let uniqueContinents = []
+            let allTitles = []
+            let uniqueTitles = []
+
             for(let country of countryData.data.countries)  {
                 data.push(country)
-                allContinents.push(country.continent.name)
+                if(displayCountries.groupBy === byContinent) {
+                    allTitles.push(country.continent.name)
+                }
+                else if (displayCountries.groupBy === byLanguage) {
+                    for(let language of country.languages) {
+                        allTitles.push(language.name)
+                    }
+                } 
             }
 
-            uniqueContinents = [...new Set(allContinents)]
+            uniqueTitles = [...new Set(allTitles)]
             setDisplayCountries({
                 ...displayCountries,
                 display: data,
-                continents: uniqueContinents
+                titles: uniqueTitles
             })
         }
-    },[countryData])
+    },[countryData, displayCountries.groupBy])
     
 
-    if(displayCountries.display) console.log(displayCountries.display, displayCountries.groupBy, displayCountries.continents);
+    if(displayCountries.display) console.log(displayCountries.groupBy, displayCountries.titles);
     
 
 
 
     return (
+
         <main>
             <h1>
                 Country Search
@@ -109,25 +117,29 @@ const SearchBar = ({data}) => {
             <input type="text" onChange={handleChange} value={keyword} placeholder="Search for your Country"/>
             <h3> Group By: </h3>
             <button onClick={GroupingByContinent}>Continent</button>
-            <button onClick={() => {}}>Language</button> 
+            <button onClick={GroupingByLanguage}>Language</button> 
             <div>
                 {
                     !!displayCountries.display.length
-                    ? displayCountries.continents.map(continent =>
+                    ? displayCountries.titles.map((title, idx) =>
                         <>
-                            <h2 key={continent}>{continent}</h2>
+                            <h2 key={idx}>{title}</h2>
                             {displayCountries.display.map(country => 
-                                country.continent.name === continent ?
-                                <ContinentCard
-                                key={country.name} 
-                                capital={country.capital}
-                                emoji={country.emoji}
-                                name={country.name}
-                                nativeName={country.native}
-                                phoneCode={country.phone}
-                                currencies={country.currency}
-                                
-                                />
+                                country.continent.name === title 
+                                || country.languages.some(lang => lang.name === title)
+                                ?
+
+                                    <ContinentCard
+                                    // key={country.name} 
+                                    capital={country.capital}
+                                    emoji={country.emoji}
+                                    name={country.name}
+                                    nativeName={country.native}
+                                    phoneCode={country.phone}
+                                    currencies={country.currency}
+                                    languages={country.languages}
+                                    continentName={country.continent.name}
+                                    />
                                 : null
                             )}    
                         </> 

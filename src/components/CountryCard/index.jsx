@@ -1,8 +1,8 @@
 import React from "react";
 
 
-const CountryCard = ({capital, emoji, name, nativeName, phoneCode, currencies}) => {
-
+const CountryCard = ({capital, emoji, name, nativeName, phoneCode, currencies, languages, continentName}) => {
+// console.log(languages);
     return (
         <div>
             <div>
@@ -11,7 +11,7 @@ const CountryCard = ({capital, emoji, name, nativeName, phoneCode, currencies}) 
             </div>
             <ul>
                 <li>Capital: <span>{capital}</span></li>
-                
+
                 <li>Phone Code: <span>{'+'+phoneCode}</span></li>
 
                 {currencies.includes(',') ?
@@ -22,6 +22,8 @@ const CountryCard = ({capital, emoji, name, nativeName, phoneCode, currencies}) 
                 </li>
                 : <li>Currency: {currencies}</li>
                 }
+
+                <li>{continentName}</li>
 
             </ul>
         </div>
