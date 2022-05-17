@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {useLazyQuery } from "@apollo/client";
 import FIND_COUNTRY from '../../GraphQl/query';
 import { ContinentCard } from '../index';
+import { MainTitle, SubTitle, CathegoryTitle } from '../../styledComponents/Titles';
+import { Paragraph } from '../../styledComponents/Text';
+import { Button } from '../../styledComponents/Button';
+import { Input } from '../../styledComponents/Input';
+import { Header, InputContainer, MainContent, SearchContainer, GroupByContainer } from '../../styledComponents/Containers';
+import {HiOutlineSearch} from 'react-icons/hi'
 
 const SearchBar = ({data}) => {
 
@@ -98,57 +104,71 @@ const SearchBar = ({data}) => {
     },[countryData, displayCountries.groupBy])
     
 
-    if(displayCountries.display) console.log(displayCountries.groupBy, displayCountries.titles);
+    // if(displayCountries.display) console.log(displayCountries.groupBy, displayCountries.titles);
     
 
 
 
     return (
 
-        <main>
-            <h1>
-                Country Search
-            </h1>
-            <p>
-                Some random text
-            </p>
+        <>
+            <Header>
+                <MainTitle>
+                    Country Search
+                </MainTitle>
+                <Paragraph main={true}>
+                    Welcome! In this application you can search <span role='img'>🔎</span> for countries and group them by continent or by their spoken language.
+                </Paragraph>
+            </Header>
 
+            <MainContent>
+                <SearchContainer>
+                    <Paragraph>
+                        If you type a single or a couple letters, it will search for all the countries name beginning with it.
+                    </Paragraph>
+                    <InputContainer>
+                        <HiOutlineSearch style={{"width": "1.3rem", "height": "auto"}}/>
+                        <Input type="text" onChange={handleChange} value={keyword} placeholder="Search for countries"/>
+                    </InputContainer>
+                    <GroupByContainer>
+                        <SubTitle> Group by: </SubTitle>
+                        <Button onClick={GroupingByContinent}>Continent</Button>
+                        <Button onClick={GroupingByLanguage}>Language</Button>
+                    </GroupByContainer>
+                </SearchContainer>
 
-            <input type="text" onChange={handleChange} value={keyword} placeholder="Search for your Country"/>
-            <h3> Group By: </h3>
-            <button onClick={GroupingByContinent}>Continent</button>
-            <button onClick={GroupingByLanguage}>Language</button> 
-            <div>
-                {
-                    !!displayCountries.display.length
-                    ? displayCountries.titles.map((title, idx) =>
-                        <>
-                            <h2 key={idx}>{title}</h2>
-                            {displayCountries.display.map(country => 
-                                country.continent.name === title 
-                                || country.languages.some(lang => lang.name === title)
-                                ?
+                <div>
+                    {
+                        !!displayCountries.display.length
+                        ? displayCountries.titles.map((title, idx) =>
+                            <>
+                                <CathegoryTitle key={idx}>{title}</CathegoryTitle>
+                                {displayCountries.display.map(country => 
+                                    country.continent.name === title 
+                                    || country.languages.some(lang => lang.name === title)
+                                    ?
 
-                                    <ContinentCard
-                                    // key={country.name} 
-                                    capital={country.capital}
-                                    emoji={country.emoji}
-                                    name={country.name}
-                                    nativeName={country.native}
-                                    phoneCode={country.phone}
-                                    currencies={country.currency}
-                                    languages={country.languages}
-                                    continentName={country.continent.name}
-                                    />
-                                : null
-                            )}    
-                        </> 
-                    )
-                    : null
-                }
-            </div>
+                                        <ContinentCard
+                                        // key={country.name} 
+                                        capital={country.capital}
+                                        emoji={country.emoji}
+                                        name={country.name}
+                                        nativeName={country.native}
+                                        phoneCode={country.phone}
+                                        currencies={country.currency}
+                                        languages={country.languages}
+                                        continentName={country.continent.name}
+                                        />
+                                    : null
+                                )}    
+                            </> 
+                        )
+                        : null
+                    }
+                </div>
 
-        </main>
+            </MainContent>
+        </>
     )
 
 
