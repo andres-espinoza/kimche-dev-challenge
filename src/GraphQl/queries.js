@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client"
 
-const FIND_COUNTRY = gql`
+export const FIND_COUNTRY = gql`
 query findCountryByCode ($arrayCodes: [String]) {
         countries(filter: {
             code: { in: $arrayCodes }
@@ -22,5 +22,11 @@ query findCountryByCode ($arrayCodes: [String]) {
             }
         }
 `
-
-export default FIND_COUNTRY
+export const COUNTRIES_NAME_CODE = gql`
+query {
+  countries {
+    name
+    code
+  }
+}
+`
