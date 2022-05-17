@@ -7,7 +7,9 @@ export const MainTitle = styled('h1')`
     font-size: 3rem;
     letter-spacing: 3px;
     color: #fff;
-    column-count: 1;
+    width: min-content;
+    margin-right: 8rem;
+    text-align: center;
 `
 
 export const SubTitle = styled('h2')`
@@ -19,7 +21,10 @@ export const SubTitle = styled('h2')`
 `
 
 export const CathegoryTitle = styled('h3')`
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'GFS Didot', serif;
     font-weight: 400;
     font-size: 2rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 2rem;
 `

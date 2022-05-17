@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const Header = styled('header')`
     background-color: #000;
-    padding: 3rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    padding: 4rem;
+    display: flex;
     align-items: center;
 `
 
@@ -17,6 +16,7 @@ export const InputContainer = styled('div')`
     width: fit-content;
     display:flex;
     margin: 2rem 0;
+    position: relative;
 `
 
 export const MainContent = styled('main')`
@@ -42,3 +42,16 @@ export const GroupByContainer = styled('section')`
     align-items: center;
 `
 
+export const CardsContainer = styled('section')`
+    width: 80vw;
+    margin: 3rem 0;
+`
+
+export const CathegoryContainer = styled('section')`
+    margin-bottom: 3rem;
+`
+export const CountriesCards = styled('div')`
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2rem;
+`

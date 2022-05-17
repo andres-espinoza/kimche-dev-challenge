@@ -9,7 +9,7 @@ export const Button = styled('button')`
     padding: 0.6em 0.9em;
     border: 2px solid transparent;
     border-radius: 5px;
-    background-color: #73c5fc;
+    background-color: #4aa9e8;
     transition: all 0.4s ease-in;
     cursor: pointer;
 
@@ -18,6 +18,6 @@ export const Button = styled('button')`
         transition: all 0.4s ease-in;
         background-color: #fff;
         color: #000;
-        border-color: #73c5fc;
+        border-color: #4aa9e8;
     }
 `

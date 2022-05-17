@@ -6,6 +6,5 @@ export const Paragraph = styled('p')`
     font-size: 1.2rem;
     font-weight: 400;
     color: ${({main}) => main ? '#fff' : '#000'};
-    grid-column: span 3;
-
+    width: ${({main}) => main ? '60%' : '100%'};
 `  
