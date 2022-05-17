@@ -1,37 +1,23 @@
 import React from "react";
-import "./App.css";
-import { SearchBar } from "./components";
-import { useQuery, gql } from "@apollo/client";
-
-
+import { SearchBar, HeaderSite } from "./components";
+import { useQuery } from "@apollo/client";
+import { COUNTRIES_NAME_CODE } from "./GraphQl/queries";
 
 
 const App = () => {
 
-  const countries = gql`
-    query {
-      countries {
-        name
-        code
-      }
-    }
-  `
-  const {data, loading} = useQuery(countries)
+  const {data, loading} = useQuery(COUNTRIES_NAME_CODE)
 
 
     return (
       <div>
-
+        <HeaderSite />
         {loading 
           ? <p>cargando</p> 
           : <SearchBar data={data}/>
         }
       </div>
     )
-
-  
-
-}
-
+};
 
 export default App;
