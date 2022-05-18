@@ -42,6 +42,10 @@ export const Emoji = styled('div')`
     position: relative;
     border: 1px solid #4aa9e8;
     margin-right: 10px;
+
+    @media (max-width: 500px) {
+        border-color: transparent;
+    }
 `
 
 export const EmojiAdust = styled('span')`
