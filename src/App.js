@@ -10,13 +10,13 @@ const App = () => {
 
 
     return (
-      <>
+      <div>
         <HeaderSite />
         {loading 
-          ? <p>cargando</p> 
+          ? ""
           : <SearchBar data={data}/>
         }
-      </>
+      </div>
     )
 };
 
