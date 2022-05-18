@@ -13,7 +13,6 @@ const CountryCard = ({
     continentName}) => {
 
     const regexSeparateByComma = new RegExp('\\w+[,]?','g');
-    console.log(phoneCode);
     return (
         <Card>
             <HeaderCard>

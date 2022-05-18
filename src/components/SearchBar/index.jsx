@@ -53,7 +53,6 @@ const SearchBar = ({data}) => {
                 countryCodes.push(country.code)
             }
         }
-        console.log(countryCodes);
         !!countryCodes.length && getCountry({variables: {arrayCodes: countryCodes}})
         
     };
@@ -117,7 +116,7 @@ const SearchBar = ({data}) => {
                 titles: uniqueTitles
             })
         }
-    },[countryData, displayCountries]);
+    },[countryData, displayCountries.groupBy]);
 
     return (
 
@@ -150,7 +149,6 @@ const SearchBar = ({data}) => {
                                         || country.languages.some(lang => lang.name === title)
                                         ?
                                             <CountryCard
-                                            // key={country.name}
                                             capital={country.capital}
                                             emoji={country.emoji}
                                             name={country.name}
