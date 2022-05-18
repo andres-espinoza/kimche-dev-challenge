@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "../../styledComponents/Card";
+import { Card, HeaderCard, Emoji, EmojiAdust, CountryName, CountryDetails, CountryItems } from "../../styledComponents/Card";
 
 
 const CountryCard = ({
@@ -13,28 +13,66 @@ const CountryCard = ({
     continentName}) => {
 
     const regexSeparateByComma = new RegExp('\\w+[,]?','g');
-
+    console.log(phoneCode);
     return (
         <Card>
-            <div>
-                <span>{emoji}</span>
-                <h4>{name === nativeName ? name : `${name} (${nativeName})`}</h4>
-            </div>
+            <HeaderCard>
+                <Emoji>
+                    <EmojiAdust>
+                        {emoji}
+                    </EmojiAdust>
+                </Emoji>
+                <CountryName>{name === nativeName ? name : `${name} - ${nativeName}`}</CountryName>
+            </HeaderCard>
             <ul>
-                <li>Capital: <span>{capital}</span></li>
+                <CountryItems>
+                    <CountryDetails>
+                        Capital: { capital ? <CountryDetails countryData={true}>{capital}</CountryDetails>
+                        : 'No capital found'}
+                    </CountryDetails>
+                </CountryItems>
 
-                <li>Phone Code: <span>{'+'+phoneCode}</span></li>
 
-                {currencies && currencies.includes(',') ?
-                <li>
-                    Currencies: {currencies.match(regexSeparateByComma).map(curr => 
-                        <span key={curr}>{curr}</span>
+                {phoneCode && phoneCode.includes(',') ?
+                <CountryItems>
+                    Phone Codes: {phoneCode.match(regexSeparateByComma).map(phoneCod => 
+                        <CountryDetails countryData={true} key={phoneCod}>{'+'+phoneCod}</CountryDetails>
                         )}
-                </li>
-                : <li>Currency: {currencies ? currencies : 'No currency found'}</li>
+                </CountryItems>
+                : <CountryItems>
+                    Phone Code: {phoneCode ? <CountryDetails countryData={true}>{'+'+phoneCode}</CountryDetails> : 'No phone code found'}
+                </CountryItems>
                 }
 
-                <li>{continentName}</li>
+                {currencies && currencies.includes(',') ?
+                <CountryItems>
+                    Currencies: {currencies.match(regexSeparateByComma).map(curr => 
+                        <CountryDetails countryData={true} key={curr}>{curr}</CountryDetails>
+                        )}
+                </CountryItems>
+                : <CountryItems>
+                    Currency: {currencies ? <CountryDetails countryData={true}>{currencies}</CountryDetails> : 'No currency found'}
+                </CountryItems>
+                }
+
+                {languages && languages.length > 1 ?
+                <CountryItems>
+                    Languages: {languages.map(({name}, idx, arr) =>
+                        idx === arr.length-1 ?
+                        <CountryDetails countryData={true} key={name}>{name}</CountryDetails>
+                        : <CountryDetails countryData={true} key={name}>{name},</CountryDetails>
+                        )}
+                </CountryItems>
+                : <CountryItems>
+                    Language: {languages[0] ? <CountryDetails countryData={true}>{languages[0].name}</CountryDetails> : 'No language found'}
+                </CountryItems>
+                }
+
+                <CountryItems>
+                    <CountryDetails>
+                        Continent: {<CountryDetails countryData={true}>{continentName}</CountryDetails>}
+                    </CountryDetails>
+                </CountryItems>
 
             </ul>
         </Card>

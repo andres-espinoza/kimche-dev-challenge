@@ -10,6 +10,11 @@ export const MainTitle = styled('h1')`
     width: min-content;
     margin-right: 8rem;
     text-align: center;
+
+    @media (max-width: 750px) {
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
 `
 
 export const SubTitle = styled('h2')`

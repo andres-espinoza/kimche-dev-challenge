@@ -7,4 +7,9 @@ export const Paragraph = styled('p')`
     font-weight: 400;
     color: ${({main}) => main ? '#fff' : '#000'};
     width: ${({main}) => main ? '60%' : '100%'};
+
+    @media (max-width: 600px) {
+        width: 100%;
+        text-align: ${({main}) => main ? 'center' : 'start'};
+    }
 `  

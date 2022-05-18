@@ -13,6 +13,7 @@ export const Button = styled('button')`
     transition: all 0.4s ease-in;
     cursor: pointer;
 
+
     &:hover {
 
         transition: all 0.4s ease-in;
