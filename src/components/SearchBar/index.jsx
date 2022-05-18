@@ -117,7 +117,7 @@ const SearchBar = ({data}) => {
                 titles: uniqueTitles
             })
         }
-    },[countryData, displayCountries.groupBy]);
+    },[countryData, displayCountries]);
 
     return (
 
